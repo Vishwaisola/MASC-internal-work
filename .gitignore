@@ -1,0 +1,11 @@
+.DS_Store
+preview/
+dist/
+~$*
+
+# E-Comm bridge: regenerable files that embed the runner token -- never commit
+scripts/ecomm-bridge/deploy/*.generated.ps1
+__pycache__/
+
+# Customer evidence pulled from E-Comm -- never commit
+discovery/*/evidence/

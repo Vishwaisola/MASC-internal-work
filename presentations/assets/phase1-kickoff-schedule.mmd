@@ -1,0 +1,26 @@
+%% Phase 1 Discovery kickoff schedule -- workstreams WS1-WS9.
+%% Dates are taken verbatim from the project schedule (kickoff 2026-10-13, final deliverable workshop 2026-12-21).
+%% Pre-kickoff Prerequisites & Access Enablement (2026-09-16 to 2026-10-12) is not charted here.
+%% Update this file from the project schedule, not by hand.
+%% Render: npx @mermaid-js/mermaid-cli@11 -i phase1-kickoff-schedule.mmd -o phase1-kickoff-schedule.png -w 1300 -s 2 -b white
+%%{init: {'theme':'base','themeCSS':'* { font-family: Helvetica Neue, Helvetica, Arial, sans-serif !important; } .milestoneText { font-style: normal !important; } .grid .tick text { display: none; } .grid ~ .grid .tick text { display: block; font-size: 13px; }','themeVariables':{'fontFamily':'Helvetica Neue, Arial, sans-serif','taskBkgColor':'#2E7DD1','taskBorderColor':'#2E7DD1','taskTextColor':'#ffffff','taskTextDarkColor':'#0B2A4A','taskTextOutsideColor':'#0B2A4A','critBkgColor':'#0B2A4A','critBorderColor':'#0B2A4A','sectionBkgColor':'#EAF2FB','altSectionBkgColor':'#ffffff','sectionBkgColor2':'#EAF2FB','gridColor':'#c5ced6','textColor':'#0B2A4A'},'gantt':{'barHeight':32,'barGap':8,'fontSize':17,'sectionFontSize':17,'leftPadding':210,'topPadding':20,'rightPadding':40,'topAxis':true}}}%%
+gantt
+    todayMarker off
+    dateFormat YYYY-MM-DD
+    axisFormat %b %d
+    tickInterval 1week
+    weekday tuesday
+    section Start in parallel
+    Engagement kickoff                   :milestone, m0, 2026-10-13, 0d
+    WS1 Azure Landing Zone               :w1, 2026-10-13, 2026-11-02
+    WS2 Azure Governance and Policy      :w2, 2026-10-13, 2026-11-02
+    WS4 Network and Virtual Desktop      :w4, 2026-10-13, 2026-11-02
+    WS5 Identity and Active Directory    :w5, 2026-10-13, 2026-11-02
+    WS3 On-Premises Infrastructure       :w3, 2026-10-13, 2026-11-10
+    section Follow-on reviews
+    WS6 Application and Database         :w6, 2026-10-20, 2026-11-30
+    WS7 Security and Resilience Posture  :w7, 2026-10-20, 2026-11-30
+    WS8 Process and Capability           :w8, 2026-12-01, 2026-12-15
+    section Synthesis and readout
+    WS9 Cost Roadmap and Findings        :crit, w9, 2026-12-15, 2026-12-21
+    Final deliverable workshop           :milestone, m2, 2026-12-21, 0d

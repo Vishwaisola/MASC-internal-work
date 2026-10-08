@@ -1,0 +1,109 @@
+name: Build presentations
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'presentations/**'
+      - 'scripts/build-presentations.sh'
+      - 'scripts/libreoffice-version'
+      - '.github/workflows/presentations.yml'
+  pull_request:
+    paths:
+      - 'presentations/**'
+      - 'scripts/build-presentations.sh'
+      - 'scripts/libreoffice-version'
+      - '.github/workflows/presentations.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: presentations-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+
+      - name: Install fonts
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends fonts-noto-core fonts-liberation
+
+      # The editable PowerPoint is produced by LibreOffice, and its output changes between
+      # versions: Ubuntu's 24.2 turns bordered boxes into solid blocks and shadows into black
+      # images. Install the exact version pinned in scripts/libreoffice-version, the same one
+      # the local builds use, from The Document Foundation's archive.
+      - name: Read pinned LibreOffice version
+        id: lo
+        run: echo "version=$(tr -d '[:space:]' < scripts/libreoffice-version)" >> "$GITHUB_OUTPUT"
+
+      - name: Cache LibreOffice package
+        uses: actions/cache@v6
+        with:
+          path: ${{ runner.temp }}/libreoffice.tar.gz
+          key: libreoffice-${{ steps.lo.outputs.version }}-linux-x86_64
+
+      - name: Install LibreOffice
+        env:
+          LO_VERSION: ${{ steps.lo.outputs.version }}
+          LO_TARBALL: ${{ runner.temp }}/libreoffice.tar.gz
+        run: |
+          if [ ! -s "$LO_TARBALL" ]; then
+            curl -fL --retry 3 -o "$LO_TARBALL" \
+              "https://downloadarchive.documentfoundation.org/libreoffice/old/${LO_VERSION}/deb/x86_64/LibreOffice_${LO_VERSION}_Linux_x86-64_deb.tar.gz"
+          fi
+          mkdir -p "$RUNNER_TEMP/lo"
+          tar -xzf "$LO_TARBALL" -C "$RUNNER_TEMP/lo"
+          sudo apt-get install -y --no-install-recommends "$RUNNER_TEMP"/lo/*/DEBS/*.deb
+          soffice_path="$(ls /opt/libreoffice*/program/soffice | head -n 1)"
+          echo "SOFFICE_PATH=$soffice_path" >> "$GITHUB_ENV"
+          "$soffice_path" --version
+
+      - name: Install Marp and Mermaid
+        run: npm install -g @marp-team/marp-cli@4.5.1 @mermaid-js/mermaid-cli@11
+
+      - name: Build decks
+        id: build
+        env:
+          CHROME_NO_SANDBOX: '1'
+          PUPPETEER_CONFIG: ${{ runner.temp }}/puppeteer.json
+          BUILD_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: |
+          echo '{"args":["--no-sandbox"]}' > "$PUPPETEER_CONFIG"
+          # A re-run of the same build gets its own number, so no two builds share a stamp.
+          BUILD_NUMBER="${{ github.run_number }}"
+          if [ "${{ github.run_attempt }}" != "1" ]; then
+            BUILD_NUMBER="$BUILD_NUMBER.${{ github.run_attempt }}"
+          fi
+          export BUILD_NUMBER
+          scripts/build-presentations.sh
+
+      - name: Upload presentations
+        uses: actions/upload-artifact@v7
+        with:
+          name: presentations-${{ steps.build.outputs.build_id }}
+          path: dist/
+          if-no-files-found: error
+
+      - name: Publish release
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          BUILD_ID: ${{ steps.build.outputs.build_id }}
+          BUILD_LABEL: ${{ steps.build.outputs.build_label }}
+        run: |
+          gh release create "presentations-$BUILD_ID" dist/* \
+            --target "$GITHUB_SHA" \
+            --title "Presentations — $BUILD_LABEL" \
+            --notes "Built from commit ${GITHUB_SHA::7}. Each file carries this build stamp in its name and on its title slide: $BUILD_LABEL." \
+            --latest
