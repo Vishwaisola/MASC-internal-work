@@ -1,0 +1,8 @@
+# The build script runs on the Linux runner. CRLF line endings would break its shebang,
+# so keep it LF regardless of the machine it was edited on.
+*.sh text eol=lf
+
+# Binary assets must never be line-ending converted.
+*.png binary
+*.pptx binary
+*.pdf binary
