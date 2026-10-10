@@ -212,8 +212,8 @@ TechIO<br>Friday, October 16, 2026
 | Phase 3 | Data & Identity | Complete | EF6 migrated to EF Core 10; ADAL retired for MSAL; token parity validated |
 | Phase 4 | Observability | Complete | Performance checks; Azure Monitor and App Insights integrated |
 | Phase 5 | Cloud Deployment | Complete | CI/CD, secrets and monitoring wired up; staging deployment complete |
-| Phase 6 | Integration & QA | Complete | Full integration testing, security scan and documentation complete |
-| Phase 7 | UAT Handover | Not Started | UAT execution and sign-off; handover to MASC |
+| Phase 6 | Integration & QA | Complete | Full integration testing and documentation complete |
+| Phase 7 | UAT Handover | Not Started | Security scan and UAT handover and sign-off |
 
 ---
 
@@ -232,7 +232,7 @@ TechIO<br>Friday, October 16, 2026
 - **Cloud-ready**
   Hardened security, ready for Azure deployment
 - **Ahead of plan**
-  34% faster, with demo and sign-off remaining
+  Schedule is 34% faster, with demo and sign-off remaining
 
 <!--
 Specialized agents build; the TechioSoft Tech Lead decides every risky call.
