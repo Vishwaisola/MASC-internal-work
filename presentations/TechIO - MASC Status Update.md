@@ -31,6 +31,7 @@ style: |
   em { color: var(--muted); font-style: normal; }
   ul, ol { margin: 0 0 15px; }
   li { margin-bottom: 14px; }
+  .arrow { display: inline-block; margin: 0 7px; }
   table {
     font-size: 20px; border-collapse: collapse;
     width: 100% !important; min-width: 100%; table-layout: fixed;
@@ -169,7 +170,7 @@ TechIO<br>Friday, October 16, 2026
 2. **Project Phases & Key Deliverables**
 3. **Modernization Approach & Agents**
 4. **Humans in the Loop & Governance**
-5. **The Loop: Prompts → Outputs → Refinement**
+5. **The Loop: Prompts <span class="arrow">→</span> Outputs <span class="arrow">→</span> Refinement**
 6. **Reviews, Parity & Security**
 7. **Progress, Timeline & What's Next**
 
@@ -194,8 +195,8 @@ TechIO<br>Friday, October 16, 2026
 
 > Escalation path
 >
-> - **L1:** Technical team ↔ workstream SME
-> - **L2:** Project Manager ↔ Tech Lead
+> - **L1:** Technical team <span class="arrow">↔</span> workstream SME
+> - **L2:** Project Manager <span class="arrow">↔</span> Tech Lead
 > - **L3:** Executive Sponsors, both sides
 
 ---
@@ -224,7 +225,7 @@ TechIO<br>Friday, October 16, 2026
 - **Agents & skills**
   A specialized agent for each job, not one black box
 - **Human-gated**
-  TechioSoft's Tech Lead makes every risky call
+  TechIO's Tech Lead makes every risky call
 - **Stage gates**
   Nothing risky merges without passing a gate
 - **Iterative loop**
@@ -235,7 +236,7 @@ TechIO<br>Friday, October 16, 2026
   Schedule is 34% faster, with demo and sign-off remaining
 
 <!--
-Specialized agents build; the TechioSoft Tech Lead decides every risky call.
+Specialized agents build; the TechIO Tech Lead decides every risky call.
 This slide previews the agenda. Each card maps to one of the six sections that follow.
 -->
 
@@ -254,7 +255,7 @@ Two .NET agents carry the work, in order.
 
 - **Input:** the slicing plan and endpoint inventory from the Discovery Agent.
 - **Process:** the Modernization Lead orchestrates the build, test and self-healing fix loop, without writing production code itself.
-- **Output:** a reviewable PR for every stage; the TechioSoft Tech Lead reviews and approves before anything merges.
+- **Output:** a reviewable PR for every stage; the TechIO Tech Lead reviews and approves before anything merges.
 
 ---
 
@@ -262,9 +263,9 @@ Two .NET agents carry the work, in order.
 
 ## Modernizing Agent Skills in Detail
 
-**Modernization Lead's** four skills, each with a guardrail and a TechIO review.
+**Modernization Lead's** four skills, each with a guardrail and a Tech Lead review.
 
-| Skill | What it does | Guardrail built in | What TechIO reviews |
+| Skill | What it does | Guardrail built in | What Tech Lead reviews |
 |---|---|---|---|
 | State Tracker | Single source of truth for 14 slices; powers the live dashboard. | Validation gate enforces slicing rules R1–R10. | Live progress dashboard |
 | Branch & PR Orchestrator | One branch/PR per stage; runs the self-healing build loop. | No silent commits; up to 5 fix retries, then a draft PR with the failure log. | PR summary, test and parity reports, self-healing log, state diff |
@@ -279,9 +280,9 @@ Two .NET agents carry the work, in order.
 
 People make the risky calls. Agents do the repeatable work.
 
-1. **Tech Lead prompts:** the TechioSoft Tech Lead sets the intent for each stage.
+1. **Tech Lead prompts:** the TechIO Tech Lead sets the intent for each stage.
 2. **Agents build:** branch, code, tests and the self-healing loop.
-3. **Tech Lead approves:** the TechioSoft Tech Lead reviews the PR and parity reports.
+3. **Tech Lead approves:** the TechIO Tech Lead reviews the PR and parity reports.
 4. **MASC reviews:** MASC reviews the PR and demo, and confirms parity before Phase 4.
 
 ---
@@ -299,20 +300,20 @@ People make the risky calls. Agents do the repeatable work.
 
 ## Stage Gates & Governance
 
-Database and security changes are gated to the TechioSoft Tech Lead.
+Database and security changes are gated to the TechIO Tech Lead.
 
 - **Phase gates (L0–L5)**
   Foundation must be green before feature work begins
 - **Slicing rules (R1–R10)**
   Small, reviewable changes with a full audit trail
 - **Human gates (L3)**
-  Data parity and live-Azure steps need TechioSoft sign-off
+  Data parity and live-Azure steps need TechIO sign-off
 
 ---
 
 <!-- _class: next -->
 
-## The Loop: Prompts → Outputs → Refinement
+## The Loop: Prompts <span class="arrow">→</span> Outputs <span class="arrow">→</span> Refinement
 
 Human intent in, reviewed change out, iteratively. It's a conversation: the Tech Lead asks, the agent produces a reviewable PR, and we refine. Every step leaves a documented artifact.
 
@@ -341,7 +342,7 @@ Endpoint inventory · contract-parity test harness · live progress dashboard ·
 AI review and real-data testing found what compilers couldn't. These are subtle behavioral bugs that would have hit production, caught early by actually running the app, not just compiling it.
 
 <ul>
-<li><span class="num">8</span><span class="label">EF6 → EF Core parity bugs</span><span class="desc">Surfaced by running the modern app against the real database, all fixed</span></li>
+<li><span class="num">8</span><span class="label">EF6 <span class="arrow">→</span> EF Core parity bugs</span><span class="desc">Surfaced by running the modern app against the real database, all fixed</span></li>
 <li><span class="num">6</span><span class="label">Self-healing fix cycles</span><span class="desc">100% converged, averaging 2 iterations</span></li>
 <li><span class="num">2</span><span class="label">Runtime-only defects</span><span class="desc">An independent code-review agent caught defects a passing build hid</span></li>
 <li><span class="num">22</span><span class="label">Endpoints</span><span class="desc">The modern API now returns real client data from the Dev database</span></li>
