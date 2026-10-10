@@ -2,26 +2,41 @@
 %% Dates come from the project schedule, not from memory. Keep this file as the single source
 %% of truth and let the build render the PNG; do not edit the PNG by hand.
 %% Render: npx @mermaid-js/mermaid-cli@11 -i project-timeline.mmd -o project-timeline.png -w 1300 -s 2 -b white
-%%{init: {'theme':'base','themeCSS':'* { font-family: Helvetica Neue, Helvetica, Arial, sans-serif !important; } .milestoneText { font-style: normal !important; } .grid .tick text { display: none; } .grid ~ .grid .tick text { display: block; font-size: 13px; }','themeVariables':{'fontFamily':'Helvetica Neue, Arial, sans-serif','taskBkgColor':'#2E7DD1','taskBorderColor':'#2E7DD1','taskTextColor':'#ffffff','taskTextDarkColor':'#0B2A4A','taskTextOutsideColor':'#0B2A4A','critBkgColor':'#0B2A4A','critBorderColor':'#0B2A4A','sectionBkgColor':'#EAF2FB','altSectionBkgColor':'#ffffff','sectionBkgColor2':'#EAF2FB','gridColor':'#c5ced6','textColor':'#0B2A4A'},'gantt':{'barHeight':30,'barGap':7,'fontSize':17,'sectionFontSize':17,'leftPadding':200,'topPadding':20,'rightPadding':40,'topAxis':true}}}%%
+%% Each phase is its own section so its full description sits in the left margin, out of the
+%% bar's way. Status (done/planned/target) is colour-only -- see the legend under the image in
+%% the slide markdown -- so bars carry no readable inline text (mermaid needs a non-empty task
+%% name, hence the single middle-dot placeholder). The Accelerated schedule row reuses the crit
+%% (blue) styling so its text renders white automatically; only the dash pattern is custom.
+%%{init: {'theme':'base','themeCSS':'* { font-family: Helvetica Neue, Helvetica, Arial, sans-serif !important; } .milestoneText { font-style: normal !important; } .grid .tick text { display: none; } .grid ~ .grid .tick text { display: block; font-size: 13px; } #accel { stroke-dasharray: 6,4; }','themeVariables':{'fontFamily':'Helvetica Neue, Arial, sans-serif','taskBkgColor':'#37782C','taskBorderColor':'#37782C','taskTextColor':'#ffffff','taskTextDarkColor':'#194722','taskTextOutsideColor':'#194722','critBkgColor':'#2E7DD1','critBorderColor':'#2E7DD1','doneTaskBkgColor':'#8EBF3F','doneTaskBorderColor':'#8EBF3F','doneTaskTextColor':'#194722','sectionBkgColor':'#EFF6E9','altSectionBkgColor':'#ffffff','sectionBkgColor2':'#EFF6E9','gridColor':'#D7E6C9','textColor':'#194722'},'gantt':{'barHeight':26,'barGap':6,'fontSize':16,'sectionFontSize':16,'leftPadding':340,'topPadding':20,'rightPadding':40,'topAxis':true}}}%%
 gantt
     todayMarker off
     dateFormat YYYY-MM-DD
     axisFormat %b %d
     tickInterval 1week
     weekday monday
-    section Build
-    Kick-off and finalized plan              :k0, 2026-09-04, 2026-09-09
-    Phase 0 Prune and migrate dependencies   :p0, 2026-09-10, 2026-09-22
-    Phase 1 Foundation and configuration     :p1, 2026-09-10, 2026-09-22
-    Phase 2 Host and framework               :p2, 2026-09-23, 2026-09-29
-    Phase 3 Data and identity                :p3, 2026-10-02, 2026-10-07
-    section Cloud and QA
-    Phase 4 Observability and optimization   :p4, 2026-10-08, 2026-10-15
-    Phase 5 Cloud deployment and CI/CD       :p5, 2026-10-08, 2026-10-15
-    Phase 6 Integration and internal QA      :p6, 2026-10-16, 2026-10-29
-    section Demos and handover
-    Demo Phases 0 to 2                       :milestone, m1, 2026-10-01, 0d
-    Demo Phase 3                             :milestone, m2, 2026-10-08, 0d
-    Final technical demo                     :milestone, m3, 2026-10-30, 0d
-    UAT handover and SOW completion          :crit, milestone, m4, 2026-11-02, 0d
-    Hypercare outside SOW scope              :h1, 2026-11-02, 2026-11-16
+    section Finalized Modernization Plan
+    .                                       :done, k0, 2026-09-08, 2026-09-09
+    section Phase 0: Dependency Pruning
+    .                                       :done, p0, 2026-09-10, 2026-09-22
+    section Phase 1: Foundation & Config
+    .                                       :done, p1, 2026-09-10, 2026-09-22
+    section Phase 2: Host & Framework
+    .                                       :done, p2, 2026-09-23, 2026-09-29
+    section Phase 3: Data & Identity
+    .                                       :done, p3, 2026-10-02, 2026-10-07
+    section Phase 4: Observability
+    .                                       :done, p4, 2026-10-08, 2026-10-15
+    section Phase 5: Cloud Deployment
+    .                                       :done, p5, 2026-10-08, 2026-10-15
+    section Test environment deployment & handover complete
+    .                                       :crit, milestone, t1, 2026-10-13, 0d
+    section Final Demo
+    .                                       :crit, milestone, d1, 2026-10-16, 0d
+    section Phase 6: Integration & Internal QA
+    .                                       :done, p6, 2026-10-16, 2026-10-29
+    section UAT Handover
+    .                                       :milestone, m1, 2026-11-02, 0d
+    section Hypercare
+    .                                       :h1, 2026-11-02, 2026-11-16
+    section Accelerated schedule
+    Accelerated                            :crit, accel, 2026-10-13, 2026-11-02
