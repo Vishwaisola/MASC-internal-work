@@ -165,12 +165,13 @@ TechIO<br>Friday, October 16, 2026
 
 ## Agenda
 
-1. **Agents**
-2. **Humans in the Loop**
-3. **Stage Gates & Risks**
-4. **The Loop: Prompts → Outputs → Refinement**
-5. **Reviews, Quality & Security**
-6. **Progress, Timeline & What's Next**
+1. **Introductions**
+2. **Project Phases & Key Deliverables**
+3. **Modernization Approach & Agents**
+4. **Humans in the Loop & Governance**
+5. **The Loop: Prompts → Outputs → Refinement**
+6. **Reviews, Parity & Security**
+7. **Progress, Timeline & What's Next**
 
 ---
 
